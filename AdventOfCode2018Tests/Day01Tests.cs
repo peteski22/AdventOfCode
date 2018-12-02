@@ -6,7 +6,7 @@ namespace AdventOfCode2018Tests
     [TestClass]
     public class Day01Tests
     {
-        private readonly string path = @"C:\src\AdventOfCode\AdventOfCode2018Tests\resources\Day01.txt";
+        private readonly string path = @"C:\src\AdventOfCode\AdventOfCode2018Tests\resources\Day01.input";
 
         [TestMethod]
         public void ShouldCalculateCorrectFinalFrequency()
