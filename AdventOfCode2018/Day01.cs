@@ -17,7 +17,7 @@
 
             do
             {
-                var temp = File.ReadAllLines(path)
+                runningTotal = File.ReadAllLines(path)
                     .TakeWhile((_, b) => isMoreNeeded)
                     .Select(int.Parse)
                     .Aggregate(runningTotal, (x, y) =>
@@ -33,7 +33,6 @@
                         return v;
                     });
 
-                runningTotal = temp;
             } while (isMoreNeeded);
 
             return firstDuplicateFrequency;
