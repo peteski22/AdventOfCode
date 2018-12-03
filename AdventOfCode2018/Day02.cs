@@ -1,6 +1,8 @@
 ﻿namespace AdventOfCode2018
 {
+    using System;
     using System.Collections.Concurrent;
+    using System.Collections.Generic;
     using System.IO;
     using System.Linq;
 
@@ -38,6 +40,38 @@
                     });
 
             return checksum.Twos * checksum.Threes;
+        }
+
+        public static string GetCharactersWhereOnlySingleCharDifference(string path)
+        {
+            var source = File.ReadAllLines(path);
+
+            var chars = (from first in source
+                         from second in source
+                         where first != second
+                         let res = GetCharsAndIsOneApart(first, second)
+                         where res.Item2
+                         select res.Item1)
+                        .First()
+                        .ToArray();
+
+            var result = new string(chars);
+
+            return result;
+        }
+
+        public static Tuple<HashSet<char>, bool> GetCharsAndIsOneApart(string first, string second)
+        {
+            var matchingChars = first
+                .Select((c, idx) => new { @Char = c, Index = idx })
+                .Where(c => first[c.Index] == second[c.Index])
+                .Select(o => o.Char).ToArray();
+
+            var originalSize = first.ToCharArray().Count();
+            var calculatedSize = matchingChars.Count();
+            var isOneApart = originalSize - calculatedSize == One;
+
+            return Tuple.Create(matchingChars.ToHashSet(), isOneApart);
         }
     }
 }

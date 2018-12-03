@@ -14,5 +14,12 @@
             var result = Day02.GetChecksum(path);
             Assert.AreEqual(5681, result);
         }
+
+        [TestMethod]
+        public void ShouldGetCharactersWhereOnlySingleCharDifference()
+        {
+            var result = Day02.GetCharactersWhereOnlySingleCharDifference(path);
+            Assert.AreEqual("uqyoeizfvmbstpkgncjwld", result);
+        }
     }
 }
