@@ -10,27 +10,27 @@
 
         public static int GetFirstDuplicatedFrequency(string path)
         {
-            var frequencies = new HashSet<int>();
+            var frequenciesEncountered = new HashSet<int>();
             var isMoreNeeded = true;
             var firstDuplicateFrequency = 0;
-            var runningTotal = 0;
+            var multiIterationRunningTotal = 0;
 
             do
             {
-                runningTotal = File.ReadAllLines(path)
+                multiIterationRunningTotal = File.ReadAllLines(path)
                     .TakeWhile((_, b) => isMoreNeeded)
                     .Select(int.Parse)
-                    .Aggregate(runningTotal, (x, y) =>
+                    .Aggregate(multiIterationRunningTotal, (currentFrequency, frequencyAdjustment) =>
                     {
-                        var v = x + y;
+                        var resultingFrequency = currentFrequency + frequencyAdjustment;
 
-                        if (!frequencies.Add(v))
-                        { 
-                            isMoreNeeded = false;
-                            firstDuplicateFrequency = v;
-                        }
+                        if (frequenciesEncountered.Add(resultingFrequency))
+                            return resultingFrequency;
 
-                        return v;
+                        isMoreNeeded = false;
+                        firstDuplicateFrequency = resultingFrequency;
+
+                        return resultingFrequency;
                     });
 
             } while (isMoreNeeded);
