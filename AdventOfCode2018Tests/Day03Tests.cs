@@ -2,6 +2,7 @@
 {
     using AdventOfCode2018;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using System.Linq;
 
     [TestClass]
     public class Day03Tests
@@ -12,8 +13,17 @@
         public void ShouldGetCorrectNumberOfConflicts()
         {
             const int fabricSize = 1000;
-            var result = Day03.GetNumberOfConflicts(path, fabricSize);
-            Assert.AreEqual(104126, result);
+            var result = Day03.GetNumberOfConflictsAndRemainingCleanClaims(path, fabricSize);
+            Assert.AreEqual(104126, result.Item1);
+        }
+
+        [TestMethod]
+        public void ShouldGetTheOnlyConflictFreeId()
+        {
+            const int fabricSize = 1000;
+            var result = Day03.GetNumberOfConflictsAndRemainingCleanClaims(path, fabricSize);
+            Assert.AreEqual(1, result.Item2.Count);
+            Assert.AreEqual("695", result.Item2.First());
         }
     }
 }

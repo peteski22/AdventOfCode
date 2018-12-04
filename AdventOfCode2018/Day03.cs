@@ -1,6 +1,7 @@
 ﻿namespace AdventOfCode2018
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Text.RegularExpressions;
     using System.Linq;
@@ -46,7 +47,7 @@
             public int Height { get; }
         }
 
-        public static string[,] ApplyClaimToFabric(string[,] map, Claim claim)
+        /*public static string[,] ApplyClaimToFabric(string[,] map, Claim claim)
         {
             var finalWidth = claim.WidthOffset + claim.Width;
             var finalHeight = claim.HeightOffset + claim.Height;
@@ -58,16 +59,52 @@
             }
 
             return map;
+        }*/
+
+        public static Tuple<string[,], HashSet<string>> ApplyClaimToFabric(string[,] map, Claim claim, HashSet<string> cleanClaims)
+        {
+            var finalWidth = claim.WidthOffset + claim.Width;
+            var finalHeight = claim.HeightOffset + claim.Height;
+
+            for (var i = claim.HeightOffset + One; i <= finalHeight; i++)
+            for (var j = claim.WidthOffset + One; j <= finalWidth; j++)
+            {
+                if (map[i,j] == null)
+                {
+                    map[i, j] = claim.Id;
+                }
+                else
+                {
+                    var current = map[i, j];
+                    map[i, j] = Conflict;
+
+                    if (current != Conflict && cleanClaims.Contains(current))
+                        cleanClaims.Remove(current);
+
+                    if (cleanClaims.Contains(claim.Id))
+                        cleanClaims.Remove(claim.Id);
+                }
+            }
+
+            return Tuple.Create(map, cleanClaims);
         }
 
-        public static int GetNumberOfConflicts(string path, int fabricSize)
+        public static Tuple<int, HashSet<string>> GetNumberOfConflictsAndRemainingCleanClaims(string path, int fabricSize)
         {
             var fabric = new string[fabricSize, fabricSize];
             var claims = File.ReadAllLines(path).Select(Claim.Create).ToList();
-            fabric = claims.Aggregate(fabric, ApplyClaimToFabric);
+            var cleanClaims = claims.Select(c => c.Id).ToHashSet();
+
+            foreach (var claim in claims)
+            {
+                var result = ApplyClaimToFabric(fabric, claim, cleanClaims);
+                fabric = result.Item1;
+                cleanClaims = result.Item2;
+            }
+
             var count = fabric.Cast<string>().ToArray().Count(s => s == Conflict);
 
-            return count;
+            return Tuple.Create(count, cleanClaims);
         }
     }
 }
