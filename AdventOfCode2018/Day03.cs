@@ -54,7 +54,7 @@
             for (var i = claim.HeightOffset + One; i <= finalHeight; i++)
             for (var j = claim.WidthOffset + One; j <= finalWidth; j++)
             {
-                map[i, j] = map[i, j] != null && map[i, j] != Conflict ? Conflict : claim.Id;
+                map[i, j] = map[i, j] == null ? claim.Id : Conflict;
             }
 
             return map;

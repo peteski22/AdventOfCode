@@ -13,7 +13,7 @@
         {
             const int fabricSize = 1000;
             var result = Day03.GetNumberOfConflicts(path, fabricSize);
-            Assert.AreEqual(85509, result); // TODO: Not actual correct answer
+            Assert.AreEqual(104126, result);
         }
     }
 }
