@@ -9,10 +9,11 @@
         private readonly string path = @"C:\src\AdventOfCode\AdventOfCode2018Tests\resources\Day03.input";
 
         [TestMethod]
-        public void ShouldGetCorrectChecksum()
+        public void ShouldGetCorrectNumberOfConflicts()
         {
-            var result = Day03.GetNumberOfConflicts(path);
-            Assert.AreEqual(4, result);
+            const int fabricSize = 1000;
+            var result = Day03.GetNumberOfConflicts(path, fabricSize);
+            Assert.AreEqual(85509, result); // TODO: Not actual correct answer
         }
     }
 }

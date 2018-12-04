@@ -9,11 +9,13 @@
     {
         private const int One = 1;
 
+        private const string Conflict = "x";
+
         public class Claim
         {
             public static Claim Create(string claimData)
             {
-                const string claimRegex = @"#(?<id>\d+)[\t\s]@[\t\s](?<widthOffset>\d+),(?<heightOffset>\d+):[\t\s](?<width>\d+)x(?<height>\d+)";
+                const string claimRegex = @"#(?<id>\d+)[\t\s]+@[\t\s]+(?<widthOffset>\d+),(?<heightOffset>\d+):[\t\s]+(?<width>\d+)x(?<height>\d+)";
                 var match = Regex.Match(claimData, claimRegex);
 
                 if (!match.Success)
@@ -46,29 +48,24 @@
 
         public static string[,] ApplyClaimToFabric(string[,] map, Claim claim)
         {
-            const string conflict = "x";
             var finalWidth = claim.WidthOffset + claim.Width;
             var finalHeight = claim.HeightOffset + claim.Height;
 
             for (var i = claim.HeightOffset + One; i <= finalHeight; i++)
             for (var j = claim.WidthOffset + One; j <= finalWidth; j++)
             {
-                map[i, j] = map[i, j] != null && map[i, j] != conflict ? conflict : claim.Id;
+                map[i, j] = map[i, j] != null && map[i, j] != Conflict ? Conflict : claim.Id;
             }
 
             return map;
         }
 
-        public static int GetNumberOfConflicts(string path)
+        public static int GetNumberOfConflicts(string path, int fabricSize)
         {
-            const int fabricSize = 1000;
-
             var fabric = new string[fabricSize, fabricSize];
-            var claims = File.ReadAllLines(path).Select(Claim.Create);
-
+            var claims = File.ReadAllLines(path).Select(Claim.Create).ToList();
             fabric = claims.Aggregate(fabric, ApplyClaimToFabric);
-
-            var count = fabric.Cast<string>().ToArray().Count(s => s == "x");
+            var count = fabric.Cast<string>().ToArray().Count(s => s == Conflict);
 
             return count;
         }
