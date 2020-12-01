@@ -6,7 +6,6 @@
 
     public class Day01
     {
-
         private static readonly string inputPath = @"C:\src\AdventOfCode\AdventOfCode2020\input\day01.input";
 
         private static readonly List<int> input = File.ReadAllLines(inputPath).Select(line => int.Parse(line)).ToList();
@@ -27,6 +26,5 @@
                     where i + j + k == 2020
                     select i * j * k).Distinct().First();
         }
-
     }
 }
