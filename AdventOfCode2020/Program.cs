@@ -9,11 +9,10 @@
             Console.WriteLine("DAY 1");
             Console.WriteLine("Part 1: " + Day01.GetPart1Result());
             Console.WriteLine("Part 2: " + Day01.GetPart2Result());
-
+            
             Console.WriteLine("DAY 2");
             Console.WriteLine("Part 1: " + Day02.GetPart1Result);
             Console.WriteLine("Part 2: " + Day02.GetPart2Result);
-
 
             Console.WriteLine("Press any key to exit");
             Console.ReadKey();
