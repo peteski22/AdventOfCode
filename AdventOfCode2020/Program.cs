@@ -14,6 +14,10 @@
             Console.WriteLine("Part 1: " + Day02.GetPart1Result);
             Console.WriteLine("Part 2: " + Day02.GetPart2Result);
 
+            Console.WriteLine("DAY 3");
+            Console.WriteLine("Part 1: " + Day03.GetPart1Result());
+            Console.WriteLine("Part 2: " + Day03.GetPart2Result());
+
             Console.WriteLine("Press any key to exit");
             Console.ReadKey();
         }
