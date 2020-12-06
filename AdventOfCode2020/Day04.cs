@@ -33,7 +33,7 @@
             var present = GetEntries(inputPath)
                             .Where(d => requiredProperties.Select(x => x.Name).All(p => d.ContainsKey(p)));
 
-            var valid = present.Where(d => d.Select(kvp => new { kvp.Value, requiredProperties.Where(prop => prop.Name == kvp.Key).FirstOrDefault()?.Rule }).All(validation => validation.Rule != null && validation.Rule.IsMatch(validation.Value)));
+            var valid = present.Where(d => d.Select(kvp => new { kvp.Value, requiredProperties.Where(prop => prop.Name == kvp.Key).FirstOrDefault()?.Rule }).All(validation => validation.Rule == null || validation.Rule.IsMatch(validation.Value)));
             
             return valid.Count();
         }
