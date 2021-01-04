@@ -22,6 +22,14 @@
             Console.WriteLine("Part 1: " + Day04.GetPart1Result());
             Console.WriteLine("Part 2: " + Day04.GetPart2Result());
 
+            Console.WriteLine("DAY 5");
+            Console.WriteLine("Part 1: TODO"); //+ Day05.GetPart1Result());
+            Console.WriteLine("Part 2: TODO"); //+ Day05.GetPart2Result());
+
+            Console.WriteLine("DAY 6");
+            Console.WriteLine("Part 1: " + Day06.GetPart1Result());
+            Console.WriteLine("Part 2: " + Day06.GetPart2Result());
+
             Console.WriteLine("Press any key to exit");
             Console.ReadKey();
         }
